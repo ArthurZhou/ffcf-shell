@@ -1,0 +1,90 @@
+:root {
+  --bg: #0f1115;
+  --card: #171a21;
+  --line: #262b36;
+  --text: #e6e9ef;
+  --dim: #8b93a5;
+  --accent: #f6821f; /* Cloudflare orange */
+  --ok: #3ddc84;
+  --err: #ff6b6b;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font: 14px/1.55 -apple-system, "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+}
+
+header {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 14px 20px; border-bottom: 1px solid var(--line);
+  position: sticky; top: 0; background: var(--bg); z-index: 10;
+}
+h1 { font-size: 18px; margin: 0; }
+h1 .sub { font-size: 12px; color: var(--dim); font-weight: 400; margin-left: 8px; }
+.head-right { display: flex; gap: 10px; align-items: center; }
+
+main { padding: 16px 20px 40px; display: flex; flex-direction: column; gap: 14px; max-width: 1100px; margin: 0 auto; }
+
+.card {
+  background: var(--card); border: 1px solid var(--line);
+  border-radius: 10px; padding: 14px 16px;
+}
+.card h2 { font-size: 14px; margin: 0 0 10px; color: var(--dim); font-weight: 600; }
+.hint { font-weight: 400; color: var(--dim); font-size: 12px; }
+
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; }
+.stat { background: #12151c; border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; }
+.stat label { display: block; font-size: 11px; color: var(--dim); }
+.stat b { font-size: 14px; word-break: break-all; }
+.stat b.err { color: var(--err); font-size: 12px; font-weight: 500; }
+
+.badge { padding: 3px 10px; border-radius: 999px; font-size: 12px; background: #12151c; border: 1px solid var(--line); color: var(--dim); }
+.badge.on { color: var(--ok); border-color: #1d4030; }
+.badge.off { color: var(--err); border-color: #4a2530; }
+.badge.busy { color: var(--accent); border-color: #4a3a20; }
+
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th { text-align: left; color: var(--dim); font-weight: 500; font-size: 12px; padding: 6px 8px; border-bottom: 1px solid var(--line); }
+td { padding: 6px 8px; border-bottom: 1px solid #1d222c; }
+td.empty { text-align: center; color: var(--dim); padding: 18px; }
+tr.cached td { color: var(--dim); }
+
+.row { display: flex; gap: 8px; align-items: center; margin-bottom: 8px; flex-wrap: wrap; }
+.row label { color: var(--dim); font-size: 12px; }
+
+input[type="text"], input[type="number"], select, textarea {
+  background: #12151c; border: 1px solid var(--line); color: var(--text);
+  border-radius: 6px; padding: 7px 10px; font-size: 13px; font-family: inherit;
+}
+input[type="text"] { flex: 1; min-width: 180px; }
+textarea { width: 100%; resize: vertical; font-family: ui-monospace, Menlo, monospace; font-size: 12px; }
+input:focus, textarea:focus, select:focus { outline: 1px solid var(--accent); }
+
+button {
+  background: #20252f; color: var(--text); border: 1px solid var(--line);
+  border-radius: 6px; padding: 7px 14px; font-size: 13px; cursor: pointer;
+}
+button:hover { border-color: var(--accent); }
+button:disabled { opacity: 0.5; cursor: wait; }
+button.primary { background: var(--accent); border-color: var(--accent); color: #14100a; font-weight: 600; }
+button.link { background: none; border: none; color: var(--dim); padding: 4px 0; font-size: 12px; }
+button.link:hover { color: var(--accent); }
+
+.out {
+  background: #0c0e13; border: 1px solid var(--line); border-radius: 8px;
+  padding: 10px; font: 12px/1.5 ui-monospace, Menlo, monospace;
+  white-space: pre-wrap; word-break: break-all; max-height: 320px; overflow: auto; margin: 8px 0 0;
+}
+.hidden { display: none; }
+.meta { font-size: 13px; color: var(--dim); margin-top: 6px; }
+.meta code { color: var(--ok); background: #0c0e13; padding: 1px 6px; border-radius: 4px; }
+
+.log { max-height: 220px; overflow: auto; font: 12px/1.7 ui-monospace, Menlo, monospace; }
+.log-line { color: var(--dim); border-bottom: 1px dashed #1d222c; padding: 1px 0; word-break: break-all; }
+.log-line.ok { color: var(--ok); }
+.log-line.error { color: var(--err); }
+.log-line.info { color: var(--text); }

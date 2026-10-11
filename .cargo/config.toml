@@ -1,0 +1,18 @@
+# 本机 Xcode license 未同意（sudo xcodebuild -license 才能修），
+# 默认 `cc` 链接会报 exit 69。改用 Command Line Tools 的 clang + CLT SDK 即可绕过。
+# 注意：此配置仅对本项目生效。若日后同意了 Xcode license，可整体删除本文件。
+[target.aarch64-apple-darwin]
+linker = "/Library/Developer/CommandLineTools/usr/bin/clang"
+rustflags = [
+    "-C", "link-arg=-isysroot",
+    "-C", "link-arg=/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk",
+]
+
+[env]
+SDKROOT = "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk"
+CC = "/Library/Developer/CommandLineTools/usr/bin/clang"
+CXX = "/Library/Developer/CommandLineTools/usr/bin/clang++"
+# aws-lc-sys 等 C 依赖打包静态库时调用的归档器；不设则 cc-rs 落到
+# xcrun ar，同样被 Xcode license 拦截 (exit 69)。
+AR = "/Library/Developer/CommandLineTools/usr/bin/ar"
+AR_aarch64_apple_darwin = "/Library/Developer/CommandLineTools/usr/bin/ar"

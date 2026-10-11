@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ffcf-shell — Cloudflare IP 优选加速</title>
+  <link rel="stylesheet" href="/src/style.css" />
+</head>
+<body>
+  <header>
+    <h1>⚡ ffcf-shell <span class="sub">Fucking Fast CloudFlare Shell</span></h1>
+    <div class="head-right">
+      <span id="dns-badge" class="badge off">DNS ●</span>
+      <span id="refresh-badge" class="badge">—</span>
+      <button id="btn-refresh" class="primary">手动刷新测速</button>
+    </div>
+  </header>
+
+  <main>
+    <!-- 状态卡片 -->
+    <section class="card" id="status-card">
+      <h2>运行状态</h2>
+      <div class="grid">
+        <div class="stat"><label>本地 DNS</label><b id="st-dns">—</b></div>
+        <div class="stat"><label>监听端口</label><b id="st-port">—</b></div>
+        <div class="stat"><label>上次刷新</label><b id="st-refresh">—</b></div>
+        <div class="stat"><label>数据来源</label><b id="st-source">—</b></div>
+        <div class="stat"><label>测速引擎</label><b id="st-bin" title="">—</b></div>
+        <div class="stat"><label>最近错误</label><b id="st-error" class="err">无</b></div>
+      </div>
+    </section>
+
+    <!-- 优选结果表 -->
+    <section class="card">
+      <h2>优选 IP（目标域名）</h2>
+      <table id="tbl-best">
+        <thead>
+          <tr><th>域名</th><th>IP</th><th>延迟(ms)</th><th>丢包</th><th>速度(MB/s)</th><th>数据中心</th></tr>
+        </thead>
+        <tbody><tr><td colspan="6" class="empty">等待首轮测速…</td></tr></tbody>
+      </table>
+    </section>
+
+    <!-- 解析诊断 -->
+    <section class="card">
+      <h2>解析诊断（三级回退链）</h2>
+      <div class="row">
+        <input id="in-resolve" type="text" placeholder="域名，如 example.com" />
+        <button id="btn-resolve">诊断</button>
+      </div>
+      <pre id="resolve-out" class="out hidden"></pre>
+    </section>
+
+    <!-- api_request 测试器 -->
+    <section class="card">
+      <h2>api_request 测试器 <span class="hint">（内部 reqwest + OptimizerResolver，SNI/Host 保持原域名）</span></h2>
+      <div class="row">
+        <select id="req-method">
+          <option>GET</option><option>POST</option><option>PUT</option><option>DELETE</option><option>HEAD</option>
+        </select>
+        <input id="req-url" type="text" value="https://example.com/cdn-cgi/trace" />
+        <button id="btn-request" class="primary">发送</button>
+      </div>
+      <div class="row">
+        <input id="req-headers" type="text" placeholder='headers JSON（可选）: {"User-Agent":"ffcf/1.0"}' />
+      </div>
+      <div class="row">
+        <textarea id="req-body" rows="3" placeholder="body（可选）"></textarea>
+      </div>
+      <div id="req-meta" class="meta hidden"></div>
+      <pre id="req-out" class="out hidden"></pre>
+    </section>
+
+    <!-- 配置 -->
+    <section class="card">
+      <h2>配置</h2>
+      <div class="row">
+        <label>目标域名（逗号分隔）</label>
+        <input id="cfg-domains" type="text" />
+      </div>
+      <div class="row">
+        <label>刷新间隔（秒，0=禁用自动）</label>
+        <input id="cfg-interval" type="number" min="0" step="30" />
+        <label>Top N</label>
+        <input id="cfg-topn" type="number" min="1" max="10" />
+        <button id="btn-save-cfg">保存并应用</button>
+      </div>
+      <pre id="cfg-full" class="out hidden"></pre>
+      <button id="btn-toggle-cfg" class="link">显示完整 JSON</button>
+    </section>
+
+    <!-- 事件日志 -->
+    <section class="card">
+      <h2>事件日志</h2>
+      <div id="log" class="log"></div>
+    </section>
+  </main>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>

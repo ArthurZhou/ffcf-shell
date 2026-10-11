@@ -1,0 +1,13 @@
+# Automatically generated - DO NOT EDIT!
+
+"$schema" = "../../schemas/schema.json"
+
+[[permission]]
+identifier = "allow-optimizer-refresh"
+description = "Enables the optimizer_refresh command without any pre-configured scope."
+commands.allow = ["optimizer_refresh"]
+
+[[permission]]
+identifier = "deny-optimizer-refresh"
+description = "Denies the optimizer_refresh command without any pre-configured scope."
+commands.deny = ["optimizer_refresh"]

@@ -1,0 +1,32 @@
+[package]
+name = "tauri-plugin-cf-optimizer"
+version = "0.1.0"
+edition = "2021"
+description = "Tauri v2 plugin: local DNS (127.0.0.1:10053) + Cloudflare IP optimization via CloudflareST-Rust, without touching system DNS"
+license = "MIT"
+# tauri_plugin::Builder 硬性要求 links == package.name，否则 build script 直接失败：
+# "package.links field in the Cargo manifest is not set, it should be set to the same as package.name"
+links = "tauri-plugin-cf-optimizer"
+
+[build-dependencies]
+tauri-plugin = { version = "2", features = ["build"] }
+
+[dependencies]
+tauri = "2"
+tauri-plugin = "2"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+tokio = { version = "1", features = ["rt", "rt-multi-thread", "macros", "time", "net", "sync", "process", "io-util", "fs"] }
+# reqwest 0.13 把旧 `rustls-tls` feature 改名为 `rustls`（0.13.5 Cargo.toml 实测：
+# default-tls = ["rustls"]）。default-features=false 后必须显式开启 TLS，
+# 否则 https 请求全部失败。
+reqwest = { version = "0.13", default-features = false, features = ["rustls", "http2", "charset"] }
+hickory-server = "0.26"
+hickory-proto = "0.26"
+log = "0.4"
+time = { version = "0.3", features = ["formatting", "macros"] }
+async-trait = "0.1"
+rand = "0.9"
+
+[dev-dependencies]
+tokio = { version = "1", features = ["full"] }

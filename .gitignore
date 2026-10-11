@@ -1,0 +1,15 @@
+# Build artifacts
+/target
+src-tauri/target
+src-tauri/gen
+dist
+node_modules
+
+# macOS
+.DS_Store
+
+# Local secrets (none expected; keep it that way)
+.env
+.env.*
+*.pem
+*.key
